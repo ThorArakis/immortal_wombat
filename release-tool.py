@@ -81,19 +81,21 @@ if __name__ == "__main__":
         print 'Example:'
         print 'github_releases.py -t 1234567890 -o simplymeasured -r immortal_wombat'
         sys.exit(-1)
+    if options.create or options.delete and not options.version:
+        parser.print_help()
+        print ""
+        print "Version is required when creating or deleting a release!"
+        sys.exit(1)
 
     gh_release = GitHubRelease(options.git_hub_token, options.owner, options.repo)
     try:
         if options.create:
-            if not options.version:
-                print "Version is required when creating a release"
             result = gh_release.create_release("v{}".format(options.version))
         elif options.delete:
-            for i in range(250, 280):
-                try:
-                    result = gh_release.delete_release("v{}".format(str(i)))
-                except:
-                    pass
+            try:
+                result = gh_release.delete_release("v{}".format(options.version))
+            except:
+                pass
         else:
             result = gh_release.get_releases()
 
