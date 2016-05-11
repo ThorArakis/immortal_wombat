@@ -81,7 +81,7 @@ if __name__ == "__main__":
         print 'Example:'
         print 'github_releases.py -t 1234567890 -o simplymeasured -r immortal_wombat'
         sys.exit(-1)
-    if options.create or options.delete and not options.version:
+    if (options.create or options.delete) and not options.version:
         parser.print_help()
         print ""
         print "Version is required when creating or deleting a release!"
